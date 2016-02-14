@@ -89,19 +89,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 this.async(this._ensureInstance);
             }
             var self = this;
-            var link = this.importHref("lazytemplate.tpl",
+            var link = this.importHref("lazytemplate.html",
                 function () {
-                    console.log('lazytemplate.tpl loaded');
-                    console.log(link.import.body);
-                    document.appendChild(link.import.body);
+                    console.log('lazytemplate.html loaded');
+                    console.log('link', link);
+                    // link is in head section
+                    var dt = link.import.querySelector('#id02');
+                    console.log('content', dt);
+                    this.templatize(dt);
+                    var itemNode = this.stamp();
+                    Polymer.dom(self).appendChild(itemNode.root);
+                    //self._content.appendChild(
+                    //document.body.appendChild(document.importNode(content, true));
+                    //var dynamicEl = document.createElement("id02");
+                    //console.log(dynamicEl);
+                    //document.appendChild(link.import.body);
                     self.if = true;
                     self._queueRender();
                 },
                 function () {
                     console.log("error");
                 });
-
-
         },
 
         /**
