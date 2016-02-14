@@ -83,33 +83,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         attached: function () {
             console.log('attached');
+            
             if (this.if && this.ctor) {
                 // NOTE: ideally should not be async, but node can be attached
                 // when shady dom is in the act of distributing/composing so push it out
                 this.async(this._ensureInstance);
             }
             var self = this;
-            var link = this.importHref("lazytemplate.html",
-                function () {
-                    console.log('lazytemplate.html loaded');
-                    console.log('link', link);
-                    // link is in head section
-                    var dt = link.import.querySelector('#id02');
-                    console.log('content', dt);
-                    self.templatize(dt);
-                    var itemNode = self.stamp();
-                    Polymer.dom(self.root).appendChild(itemNode.root);
-                    //self._content.appendChild(
-                    //document.body.appendChild(document.importNode(content, true));
-                    //var dynamicEl = document.createElement("id02");
-                    //console.log(dynamicEl);
-                    //document.appendChild(link.import.body);
-                    self.if = true;
-                    self._queueRender();
-                },
-                function () {
-                    console.log("error");
-                });
+            console.log(Polymer.dom(this._content).innerHTML);
+//            self.if = true;
+//            var link = this.importHref("lazytemplate.html",
+//                function () {
+//                    console.log('lazytemplate.html loaded');
+//                    console.log('link', link);
+//                    // link is in head section
+//                    var dt = link.import.querySelector('#id02');
+//                    console.log('content', dt);
+//                    var sc = self.content;
+//                    self.templatize(dt);
+//                    var itemNode = self.stamp();
+//                    Polymer.dom(self.root).appendChild(itemNode.root);
+//                    console.log('self content ');
+//                    console.log(sc.content);
+//                    self.templatize(sc);
+//                    var itemNode2 = self.stamp();
+//                    Polymer.dom(self.root).appendChild(itemNode2.root);
+//                
+//                    //self._content.appendChild(
+//                    //document.body.appendChild(document.importNode(content, true));
+//                    //var dynamicEl = document.createElement("id02");
+//                    //console.log(dynamicEl);
+//                    //document.appendChild(link.import.body);
+//                    self.if = true;
+//                    self._queueRender();
+//                },
+//                function () {
+//                    console.log("error");
+//                });
         },
 
         /**
