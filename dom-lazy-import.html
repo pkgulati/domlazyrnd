@@ -96,9 +96,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     // link is in head section
                     var dt = link.import.querySelector('#id02');
                     console.log('content', dt);
-                    this.templatize(dt);
-                    var itemNode = this.stamp();
-                    Polymer.dom(self).appendChild(itemNode.root);
+                    self.templatize(dt);
+                    var itemNode = self.stamp();
+                    Polymer.dom(self.root).appendChild(itemNode.root);
                     //self._content.appendChild(
                     //document.body.appendChild(document.importNode(content, true));
                     //var dynamicEl = document.createElement("id02");
