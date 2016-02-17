@@ -1,0 +1,43 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dom LAZY 1</title>
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../bower_components/polymer/polymer.html">
+    </script>
+    <link rel="import" href="../bower_components/paper-input/paper-input.html">
+    </script>
+    <link rel="import" href="dom-tpl.html">
+    <link rel="import" href="my-app.html">
+    <style is="custom-style">
+    </style>
+</head>
+
+<body unresolved>
+
+    <template id="ext01">
+        <h4>External...</h4>
+        <paper-input id="inp2" label="First Name Ext" value={{fname}}></paper-input>
+        <h4>External end</h4>
+    </template>
+    <my-app id="app"></my-app>
+
+    <script>
+        (function (document) {
+            'use strict';
+            var app = document.querySelector('#app');
+            // Sets app default base URL
+            app.baseUrl = '/';
+            app.addEventListener('dom-change', function () {
+                console.log('Our app is ready to rock!');
+            });
+            window.addEventListener('WebComponentsReady', function () {
+                // imports are loaded and elements have been registered
+            });
+        })(document);
+    </script>
+
+</body>

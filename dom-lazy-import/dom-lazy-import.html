@@ -26,7 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      */
     Polymer({
 
-        is: 'dom-lazy',
+        is: 'dom-lazy-import',
         extends: 'template',
         _template: null,
 
@@ -61,6 +61,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 value: false,
                 observer: '_queueRender'
             }
+            
+            
 
         },
 
@@ -83,45 +85,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         attached: function () {
             console.log('attached');
+            
             if (this.if && this.ctor) {
                 // NOTE: ideally should not be async, but node can be attached
                 // when shady dom is in the act of distributing/composing so push it out
                 this.async(this._ensureInstance);
             }
-
-            var xmlhttp = new XMLHttpRequest();
-            var url = "lazytemplate.html";
             var self = this;
-            //console.log('one');
-            //console.log(self._content);
-            //var templates = Polymer.dom(this.$.template).getDistributedNodes();
-            //self._content = 
-            var id01 = document.querySelector('#id01');
-            console.log(id01._content);
-            self._content = id01._content;
-            self.if  = true;
-            self._queueRender();
-            
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    var tpl = xmlhttp.responseText;
-                    //console.log(tpl);
-                    //var newcontent = document.createRange().createContextualFragment(tpl);
-                    //var frag = document.createDocumentFragment();
-                    //var div = document.createElement("h2");
-                    //div.innerHTML  = "dynamic content";
-                    //frag.appendChild(div);
-                    //var element = Polymer.dom(self);
-                    //self._content = newcontent;
-                    //console.log('two',self._content);
-                    //self._content.appendChild(div);
-                    //self.if = true;
-                    //self._queueRender();
-                }
-            };
-            xmlhttp.open("GET", url, true);
-            xmlhttp.send();
-
+            console.log(Polymer.dom(this._content).innerHTML);
+            var link = this.importHref("lazytemplate.html",
+                function () {
+                    console.log('lazytemplate.html loaded');
+                    var dt = link.import.querySelector('#id02');
+                    console.log('content', dt);
+                    self.templatize(dt);
+                    console.log(dt);
+                    var itemNode = self.stamp();
+                    Polymer.dom(self.root).appendChild(itemNode.root);
+                    self.if = true;
+                    self._queueRender();
+                },
+                function () {
+                    console.log("error");
+                });
         },
 
         /**

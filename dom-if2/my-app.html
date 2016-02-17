@@ -1,0 +1,32 @@
+<link rel="import" href="../bower_components/polymer/polymer.html"></script>
+
+<dom-module id="my-app">
+    <template>
+        <hr>
+        <h2>This is inside app.html</h2>
+        <paper-input label="Application First Name" value={{fname}}></paper-input>
+        <span>{{fname}}</span>
+        <hr>
+        <h2>Start of content of app.html</h2>
+        <content></content>
+        <h2>End of content of app.html</h2>
+        <hr>
+    </template>
+</dom-module>
+
+<script>
+    
+ Polymer({
+        is: 'my-app',
+        properties: {
+          fname : {
+              type : String,
+              value : "Praveen"
+          },
+          vm: {
+            type: Object,
+            value: {}
+          }
+        }
+ });
+</script>

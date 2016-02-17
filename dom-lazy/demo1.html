@@ -9,31 +9,19 @@
     <link rel="import" href="bower_components/polymer/polymer.html"></script>
     <link rel="import" href="bower_components/paper-input/paper-input.html"></script>
     <link rel="import" href="dom-lazy.html">
+    <link rel="import" href="my-app.html">
     <style is="custom-style">
     </style>
 </head>
 
 <body unresolved>
 
-    <template is="dom-bind" id="app">
-        <template id="id01">
-                <h2>id01 template</h2>
-                <paper-input value={{fname}}></paper-input>
-                <label>inside id01 fname</label>
-                <span>{{fname}}</span>
+    <my-app id="app">
+        <h3>Application Lazy Content</h3>
+        <template is="dom-lazy">
+            <div id="lazy-content"></div>
         </template>
-
-        <h2>Demo1</h2>
-        <div class="content">
-<!--        <paper-input value={{fname}}></paper-input>-->
-            <label>First Name</label>
-            <paper-input label="normal fname" value={{fname}}></paper-input>
-            <span>{{fname}}</span>
-            <template is="dom-lazy">
-                <h3>inside dom lazy</h3>
-            </template>
-         </div>
-    </template>
+    </my-app>
 
     <script>
         (function (document) {

@@ -1,0 +1,42 @@
+<link rel="import" href="../bower_components/polymer/polymer.html"></script>
+
+<dom-module id="my-app">
+    <template id="p3232">
+        <hr>
+        <h2>This is inside app.html</h2>
+        <paper-input label="First Name" value={{fname}}></paper-input>
+        <template id="p098" is="dom-tpl" if={{flag}}>
+            <dummy-tpl></dummy-tpl>
+            <h2>pkg</h2>
+        </template>
+        <hr>
+        <h2>Start of content of app.html</h2>
+        <h2>End of content of app.html</h2>
+        <hr>
+    </template>
+</dom-module>
+
+<script>
+    
+ Polymer({
+        is: 'my-app',
+        properties: {
+          fname : {
+              type : String,
+              value : "Praveen",
+              notify : true
+          },
+          vm: {
+            type: Object,
+            value: {},
+              notify : true
+          },
+          flag : {
+              type : Boolean,
+              value : false,
+              notify : true
+          }
+            
+        }
+ });
+</script>
