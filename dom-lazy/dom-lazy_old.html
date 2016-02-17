@@ -9,7 +9,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" src="../bower_components/polymer/polymer.html">
+<link rel="import" src="bower_components/polymer/polymer.html">
 
 <script>
     /**
@@ -26,10 +26,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      */
     Polymer({
 
-        is: 'dom-lazy-import',
+        is: 'dom-lazy',
         extends: 'template',
         _template: null,
-        _ext : null,
 
         /**
          * Fired whenever DOM is added or removed/hidden by this template (by
@@ -62,8 +61,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 value: false,
                 observer: '_queueRender'
             }
-            
-            
 
         },
 
@@ -85,29 +82,54 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
         attached: function () {
-            console.log('attached');
+            console.log('attached 123 ', this._template);
+
+            console.log(Polymer.dom(this._content).innerHTML);
+            console.log(Polymer.dom(this).node);
             
             if (this.if && this.ctor) {
                 // NOTE: ideally should not be async, but node can be attached
                 // when shady dom is in the act of distributing/composing so push it out
                 this.async(this._ensureInstance);
             }
+
+            var xmlhttp = new XMLHttpRequest();
+            var url = "lazytemplate.html";
             var self = this;
-            console.log(Polymer.dom(this._content).innerHTML);
-            var link = this.importHref("lazytemplate.html",
-                function () {
-                    console.log('lazytemplate.html loaded');
-                    self._ext = link.import.querySelector('#id02');
-                    console.log('content of lazy template', self._ext);
-                    self.templatize(self._ext);
-                    //var itemNode = self.stamp();
-                    //Polymer.dom(self.root).appendChild(itemNode.root);
-                    self.if = true;
-                    self._queueRender();
-                },
-                function () {
-                    console.log("error");
-                });
+            
+            //console.log('one');
+            //console.log(self._content);
+            //var templates = Polymer.dom(this.$.template).getDistributedNodes();
+            //self._content = 
+            //var id01 = document.querySelector('#id01');
+            //console.log(id01._content);
+            //self._content = id01._content;
+            //self._queueRender();
+            
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var tpl = xmlhttp.responseText;
+                    
+                    
+                    self.if  = true;
+
+                    console.log('received '  , tpl);
+                    var newcontent = document.createRange().createContextualFragment(tpl);
+                    //var frag = document.createDocumentFragment();
+                    var div = document.createElement("h2");
+                    //div.innerHTML  = "dynamic content";
+                    //frag.appendChild(div);
+                    //var element = Polymer.dom(self);
+                    //self._content = newcontent;
+                    //console.log('two',self._content);
+                    //self._content.appendChild(div);
+                    //self.if = true;
+                    //self._queueRender();
+                }
+            };
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+
         },
 
         /**
@@ -124,9 +146,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         _render: function () {
 
             if (this.if) {
-                console.log('???');
                 if (!this.ctor) {
-                    console.log('ERROR should never come here');
                     this.templatize(this);
                 }
                 this._ensureInstance();
@@ -144,17 +164,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
         _ensureInstance: function () {
+            console.log('_ensureInstance');
             var parentNode = Polymer.dom(this).parentNode;
             // Guard against element being detached while render was queued
             if (parentNode) {
                 var parent = Polymer.dom(parentNode);
                 if (!this._instance) {
-                    console.log('_ensureInstance if case');
-                    this._instance = this._ext.stamp();
+                    this._instance = this.stamp();
                     var root = this._instance.root;
                     parent.insertBefore(root, this);
                 } else {
-                    console.log('_ensureInstance else case');
                     var c$ = this._instance._children;
                     if (c$ && c$.length) {
                         // Detect case where dom-if was re-attached in new position
@@ -196,9 +215,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Called as side-effect of a host property change, responsible for
         // notifying parent.<prop> path change on instance
         _forwardParentProp: function (prop, value) {
-            console.log('_forwardParentProp ', prop, value);
+            console.log('rohit _forwardParentProp ', prop, value);
             if (this._instance) {
-                console.log('this._instance');
+                console.log('this._instance', this._instance);
                 this._instance[prop] = value;
             }
         },
@@ -212,7 +231,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 console.log('this._instance');
                 this._instance._notifyPath(path, value, true);
             }
+        },
+        _forwardInstanceProp: function(inst, prop, value) 
+        {
+            console.log('_forwardInstanceProp');
+            console.log(inst, prop, value);
+        },
+        _forwardInstancePath: function(inst, prop, value) 
+        { 
+            console.log('_forwardInstancePath');
+            console.log(inst, prop, value);
         }
+        
 
     });
 </script>

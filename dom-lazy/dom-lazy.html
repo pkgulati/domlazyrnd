@@ -1,15 +1,5 @@
-<!--
-<!--
-@license
-Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 
-<link rel="import" src="bower_components/polymer/polymer.html">
+<link rel="import" src="../bower_components/polymer/polymer.html">
 
 <script>
     /**
@@ -29,7 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         is: 'dom-lazy',
         extends: 'template',
         _template: null,
-
+        _template1: null,
         /**
          * Fired whenever DOM is added or removed/hidden by this template (by
          * default, rendering occurs lazily).  To force immediate rendering, call
@@ -82,11 +72,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
         attached: function () {
-            console.log('attached 123 ', this._template);
-
-            console.log(Polymer.dom(this._content).innerHTML);
-            console.log(Polymer.dom(this).node);
-            
             if (this.if && this.ctor) {
                 // NOTE: ideally should not be async, but node can be attached
                 // when shady dom is in the act of distributing/composing so push it out
@@ -96,40 +81,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             var xmlhttp = new XMLHttpRequest();
             var url = "lazytemplate.html";
             var self = this;
-            
-            //console.log('one');
-            //console.log(self._content);
-            //var templates = Polymer.dom(this.$.template).getDistributedNodes();
-            //self._content = 
-            //var id01 = document.querySelector('#id01');
-            //console.log(id01._content);
-            //self._content = id01._content;
-            //self._queueRender();
-            
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     var tpl = xmlhttp.responseText;
-                    
-                    
-                    self.if  = true;
-
-                    console.log('received '  , tpl);
-                    var newcontent = document.createRange().createContextualFragment(tpl);
-                    //var frag = document.createDocumentFragment();
-                    var div = document.createElement("h2");
-                    //div.innerHTML  = "dynamic content";
-                    //frag.appendChild(div);
-                    //var element = Polymer.dom(self);
-                    //self._content = newcontent;
-                    //console.log('two',self._content);
-                    //self._content.appendChild(div);
-                    //self.if = true;
-                    //self._queueRender();
-                }
+                    console.log('tpl ', tpl);
+                    self._template1 = document.createElement('dom-template');
+                    self.templatize(self._template1);
+                    self.if = true;
+                    self._queueRender();
+                };
             };
             xmlhttp.open("GET", url, true);
             xmlhttp.send();
-
         },
 
         /**
@@ -144,7 +107,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
         _render: function () {
-
+            //console.log('dom if render ', this.if);
+            //console.log(this._content);
             if (this.if) {
                 if (!this.ctor) {
                     this.templatize(this);
@@ -164,13 +128,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
         _ensureInstance: function () {
-            console.log('_ensureInstance');
             var parentNode = Polymer.dom(this).parentNode;
             // Guard against element being detached while render was queued
             if (parentNode) {
                 var parent = Polymer.dom(parentNode);
                 if (!this._instance) {
-                    this._instance = this.stamp();
+                    this._instance = this._template1.stamp();
                     var root = this._instance.root;
                     parent.insertBefore(root, this);
                 } else {
@@ -215,9 +178,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Called as side-effect of a host property change, responsible for
         // notifying parent.<prop> path change on instance
         _forwardParentProp: function (prop, value) {
-            console.log('rohit _forwardParentProp ', prop, value);
             if (this._instance) {
-                console.log('this._instance', this._instance);
                 this._instance[prop] = value;
             }
         },
@@ -226,23 +187,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Called as side-effect of a host path change, responsible for
         // notifying parent.<path> path change on each row
         _forwardParentPath: function (path, value) {
-            console.log('_forwardParentPath ', prop, value);
             if (this._instance) {
-                console.log('this._instance');
                 this._instance._notifyPath(path, value, true);
             }
-        },
-        _forwardInstanceProp: function(inst, prop, value) 
-        {
-            console.log('_forwardInstanceProp');
-            console.log(inst, prop, value);
-        },
-        _forwardInstancePath: function(inst, prop, value) 
-        { 
-            console.log('_forwardInstancePath');
-            console.log(inst, prop, value);
         }
-        
 
     });
 </script>

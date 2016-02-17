@@ -1,27 +1,38 @@
-<link rel="import" href="bower_components/polymer/polymer.html"></script>
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="dom-lazy.html">
+</script>
 
 <dom-module id="my-app">
-    <template>
-        <h2>My Application</h2>
-        <paper-input label="Application First Name" value={{fname}}></paper-input>
-        <span>{{fname}}</span>
-        <content></content>
+    <template id="p3232">
+        <hr>
+        <h2>This is inside app.html</h2>
+        <paper-input label="First Name" value={{fname}}></paper-input>
+        <template id="p098" is="dom-lazy" if={{flag}}>
+            <dummy-tpl></dummy-tpl>
+            <h2>pkg</h2>
+        </template>
     </template>
 </dom-module>
 
+
 <script>
-    
- Polymer({
+    Polymer({
         is: 'my-app',
         properties: {
-          fname : {
-              type : String,
-              value : "Praveen"
-          },
-          vm: {
-            type: Object,
-            value: {}
-          }
+            fname: {
+                type: String,
+                value: "Praveen"
+            },
+            vm: {
+                type: Object,
+                value: {}
+            },
+            flag: {
+                type: Boolean,
+                value: false,
+                notify: true
+            }
+
         }
- });
+    });
 </script>

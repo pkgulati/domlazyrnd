@@ -5,9 +5,9 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dom LAZY 1</title>
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="bower_components/polymer/polymer.html"></script>
-    <link rel="import" href="bower_components/paper-input/paper-input.html"></script>
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../bower_components/polymer/polymer.html"></script>
+    <link rel="import" href="../bower_components/paper-input/paper-input.html"></script>
     <link rel="import" href="dom-lazy.html">
     <link rel="import" href="my-app.html">
     <style is="custom-style">
@@ -16,12 +16,7 @@
 
 <body unresolved>
 
-    <my-app id="app">
-        <h3>Application Lazy Content</h3>
-        <template is="dom-lazy">
-            <div id="lazy-content"></div>
-        </template>
-    </my-app>
+    <my-app id="app"></my-app>
 
     <script>
         (function (document) {
