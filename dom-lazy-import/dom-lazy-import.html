@@ -9,7 +9,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" src="bower_components/polymer/polymer.html">
+<link rel="import" src="../bower_components/polymer/polymer.html">
 
 <script>
     /**
@@ -96,12 +96,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             var link = this.importHref("lazytemplate.html",
                 function () {
                     console.log('lazytemplate.html loaded');
-                    var dt = link.import.querySelector('#id02');
-                    console.log('content', dt);
-                    self.templatize(dt);
-                    console.log(dt);
-                    var itemNode = self.stamp();
-                    Polymer.dom(self.root).appendChild(itemNode.root);
+                    self._ext = link.import.querySelector('#id02');
+                    console.log('content', self._ext);
+                    self.templatize(self._ext);
+                    //var itemNode = self.stamp();
+                    //Polymer.dom(self.root).appendChild(itemNode.root);
                     self.if = true;
                     self._queueRender();
                 },
@@ -147,10 +146,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             if (parentNode) {
                 var parent = Polymer.dom(parentNode);
                 if (!this._instance) {
-                    this._instance = this.stamp();
+                    console.log('_ensureInstance if case');
+                    this._instance = this._ext.stamp();
                     var root = this._instance.root;
                     parent.insertBefore(root, this);
                 } else {
+                    console.log('_ensureInstance else case');
                     var c$ = this._instance._children;
                     if (c$ && c$.length) {
                         // Detect case where dom-if was re-attached in new position

@@ -1,0 +1,39 @@
+/*
+var template = templates.filter(byClass('x'))[0];
+          
+            this.templatize(template);
+          
+            var itemNode = this.stamp({ i: this.numbers[i] });
+            Polymer.dom(this.$.items).appendChild(itemNode.root);
+ _insertChildren: function() {
+      var parentDom = Polymer.dom(Polymer.dom(this).parentNode);
+      parentDom.insertBefore(this.root, this);
+    },
+
+*/
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<script>
+  /**
+   * Creates a pseudo-custom-element that maps property values to bindings
+   * in DOM.
+   * 
+   * `stamp` method creates an instance of the pseudo-element. The instance
+   * references a document-fragment containing the stamped and bound dom
+   * via it's `root` property. 
+   *  
+   */
+  Polymer({
+    is: 'my-dom',
+    extends: 'template',
+    _template: null,
+    behaviors: [
+      Polymer.Templatizer
+    ],
+    ready: function() {
+      this._tpl = document.querySelector('#ext01');
+      this.templatize(this._tpl);
+    }
+  });
+</script>

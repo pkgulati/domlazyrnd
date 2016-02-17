@@ -29,7 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     is: 'dom-tpl',
     extends: 'template',
     _template: null,
-      _ext:null,
+      _e1:null,
 
     /**
      * Fired whenever DOM is added or removed/hidden by this template (by
@@ -117,9 +117,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           //console.log(newelem.content);    
           //this.content = newelem.content;
           console.log('before templatize ');
-          var e1 = document.querySelector('#ext01');
-          console.log('ext01', e1);    
-          this.templatize(e1);
+          this._e1 = document.querySelector('#ext01');
+          console.log('ext01', this._e1);    
+          this.templatize(this._e1);
         }
         this._ensureInstance();
         this._showHideChildren();
@@ -141,11 +141,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // Guard against element being detached while render was queued
       if (parentNode) {
         var parent = Polymer.dom(parentNode);
-        console.log(parent);
+        console.log('_ensureInstance');
         if (!this._instance) {
           this._instance = this.stamp();
           var root = this._instance.root;
-          parent.insertBefore(root, this);
+          console.log('inserting before ');
+            console.log(root);
+            console.log(this); 
+          parent.insertBefore(root, this._e1);
         } else {
           var c$ = this._instance._children;
           if (c$ && c$.length) {
@@ -153,6 +156,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             var lastChild = Polymer.dom(this).previousSibling;
             if (lastChild !== c$[c$.length-1]) {
               for (var i=0, n; (i<c$.length) && (n=c$[i]); i++) {
+                  console.log('inserting before ', n, this); 
                 parent.insertBefore(n, this);
               }
             }
