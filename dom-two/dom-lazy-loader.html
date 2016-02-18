@@ -28,6 +28,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         is: 'dom-lazy-loader',
         extends: 'template',
         _template: null,
+        _lazy : null,
+        _frag : null,
 
         /**
          * Fired whenever DOM is added or removed/hidden by this template (by
@@ -90,13 +92,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     var tpl = xmlhttp.responseText;
-                    //this._setIf(true);
-                    console.log('tpl ', tpl);
-                    //self._template1 = document.createElement('dom-template');
-                    //self.templatize(self._template1);
-                    //self._queueRender();
-                };
-            };
+                    // this.nodes..clear()..add(new DocumentFragment.html("$htmlContent"));
+                    //console.log('tpl ', tpl);
+                    //Polymer.dom(self).root.add(
+                    self._frag = document.createRange().createContextualFragment(tpl);
+                    console.log('innerhtml', Polymer.dom(self._frag).firstElementChild);
+                    self._setIf(true);
+                    self._queueRender();
+                }
+            }
             xmlhttp.open("GET", url, true);
             xmlhttp.send();
 
@@ -124,7 +128,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             //console.log(this._content);
             if (this.if) {
                 if (!this.ctor) {
-                    this.templatize(this);
+                    console.log('pkg instead of this templatize try on frag');
+                    //this.templatize(this);
+                    //console.log(Polymer.dom(this._frag).firstElementChild
+                    this.templatize(Polymer.dom(this._frag).firstElementChild);
                 }
                 this._ensureInstance();
                 this._showHideChildren();
