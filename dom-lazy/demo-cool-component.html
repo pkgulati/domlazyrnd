@@ -1,73 +1,86 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.19/webcomponents.min.js"></script>
-    <link rel="import" href="https://raw.githubusercontent.com/Polymer/polymer/master/polymer.html" />
-  </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="import" href="../bower_components/polymer/polymer.html"></script>
+    <link rel="import" href="../bower_components/paper-input/paper-input.html"></script>
+    <style is="custom-style">
+    </style>
+</head>
 
-  <body>
-    
+<body>
+
     <my-repeater>
-      <template class="x">
-        <input type="text" value="{{i.x::change}}" />
-        <div>The value of 'x' is: <span>{{i.x}}</span></div>
-      </template>
-      <template class="y">
-        <input type="text" value="{{i.y::change}}" />
-        <div>The value of 'y' is: <span>{{i.y}}</span></div>
-      </template>
+        <template class="x">
+            <input type="text" value="{{i.x::change}}" />
+            <div>The value of 'x' is: <span>{{i.x}}</span>
+            </div>
+        </template>
+        <template class="y">
+            <input type="text" value="{{i.x::change}}" />
+            <div>The value of 'x' is: <span>{{i.x}}</span>
+            </div>
+        </template>
     </my-repeater>
-    
+
     <dom-module id="my-repeater">
-      <template>
-        <div id="items"></div>
-        <content id="template" select="template"></content>
-      </template>  
+        <template>
+            <div id="items"></div>
+            <content id="template" select="template"></content>
+        </template>
     </dom-module>
-    
+
     <script>
-      
-      document.querySelector('my-repeater').numbers = [ { x: 1, y: 2 }, { x: 2, y: 10 } ];
-       
-      Polymer({
-        is: 'my-repeater',
-        properties: {
-          numbers: {
-            type: Object,
-            value: []
-          }
-        },
-        behaviors: [ Polymer.Templatizer ],
-        ready: function() {
+        document.querySelector('my-repeater').numbers = [{
+            x: 1,
+            y: 2
+        }, {
+            x: 2,
+            y: 10
+        }];
 
-          var templates = Polymer.dom(this.$.template).getDistributedNodes(); 
+        Polymer({
+            is: 'my-repeater',
+            properties: {
+                numbers: {
+                    type: Object,
+                    value: []
+                }
+            },
+            behaviors: [Polymer.Templatizer],
+            ready: function () {
 
-          for(var i = 0; i < this.numbers.length; i++) {
-            var template = templates.filter(byClass('x'))[0];
-          
-            this.templatize(template);
-          
-            var itemNode = this.stamp({ i: this.numbers[i] });
-            Polymer.dom(this.$.items).appendChild(itemNode.root);
-            
-            template = templates.filter(byClass('y'))[0]; 
-          
-            this.templatize(template);
-          
-            var itemNode = this.stamp({ i: this.numbers[i] });
-            Polymer.dom(this.$.items).appendChild(itemNode.root);
-          }
+                var templates = Polymer.dom(this.$.template).getDistributedNodes();
+
+                    var template = templates.filter(byClass('x'))[0];
+
+                    this.templatize(template);
+
+                    var itemNode = this.stamp({
+                        i: this.numbers[0]
+                    });
+                    Polymer.dom(this.$.items).appendChild(itemNode.root);
+
+                    template = templates.filter(byClass('y'))[0];
+
+                    this.templatize(template);
+
+                    var itemNode = this.stamp({
+                        i: this.numbers[0]
+                    });
+                    Polymer.dom(this.$.items).appendChild(itemNode.root);
+            }
+        });
+
+        function byClass(className) {
+            return function (template) {
+                return template.classList.contains(className);
+            }
         }
-      });
-      
-      function byClass(className) {
-        return function(template) {
-          return template.classList.contains(className);
-        }
-      }
-      
     </script>
-  </body>
+</body>
 
 </html>

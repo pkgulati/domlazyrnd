@@ -153,6 +153,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             if (parentNode) {
                 var parent = Polymer.dom(parentNode);
                 if (!this._instance) {
+                    console.log('stamp template');
                     this._instance = this.stamp();
                     var root = this._instance.root;
                     parent.insertBefore(root, this);
@@ -198,6 +199,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Called as side-effect of a host property change, responsible for
         // notifying parent.<prop> path change on instance
         _forwardParentProp: function (prop, value) {
+            console.log(prop,value);
             if (this._instance) {
                 this._instance[prop] = value;
             }
@@ -207,9 +209,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Called as side-effect of a host path change, responsible for
         // notifying parent.<path> path change on each row
         _forwardParentPath: function (path, value) {
+            console.log(path,value);
             if (this._instance) {
                 this._instance._notifyPath(path, value, true);
             }
+        },
+        _forwardInstancePath: function(inst, path, value) {
+            console.log(inst, path, value);
+        },
+        _forwardInstanceProp: function(inst, prop, value) {
+            console.log(inst, prop, value);
         }
 
     });
