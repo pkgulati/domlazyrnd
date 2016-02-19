@@ -1,18 +1,13 @@
 <link rel="import" href="../bower_components/polymer/polymer.html"></script>
+<link rel="import" href="dom-lazy.html"></script>
+<link rel="import" href="dom-tpl0.html"></script>
+<link rel="import" href="dom-tpl1.html"></script>
 
 <dom-module id="my-app">
-    <template id="p3232">
-        <hr>
-        <h2>This is inside app.html</h2>
-        <paper-input label="First Name" value={{fname}}></paper-input>
-        <template id="p098" is="dom-tpl" if={{flag}}>
-            <dummy-tpl></dummy-tpl>
-            <h2>pkg</h2>
-        </template>
-        <hr>
-        <h2>Start of content of app.html</h2>
-        <h2>End of content of app.html</h2>
-        <hr>
+    <template>
+        <h3>ddd</h3>
+        <div id="items"></div>
+        <dom-tpl1 id="abc"></dom-tpl1>
     </template>
 </dom-module>
 
@@ -37,6 +32,16 @@
               notify : true
           }
             
+        },
+        attached: function() {
+            var self = this;
+            //var el = document.createElement('dom-tpl0');
+            //console.log(el);
+//            setTimeout( function() {
+//            Polymer.dom(self.$.abc).innerHTML = '<span>First Name</span><span>{{fname}}</span>';
+//            console.log('rsr ' , Polymer.dom(self.$.abc).innerHTML);
+//            self.$.abc.lazyrender();
+//            }, 3000);
         }
  });
 </script>

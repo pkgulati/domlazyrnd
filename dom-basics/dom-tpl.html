@@ -195,10 +195,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this._instance[prop] = value;
       }
     },
-
-    // Implements extension point from Templatizer
-    // Called as side-effect of a host path change, responsible for
-    // notifying parent.<path> path change on each row
     _forwardParentPath: function(path, value) {
         console.log('path', value);
       if (this._instance) {

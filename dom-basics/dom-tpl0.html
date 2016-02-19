@@ -1,0 +1,30 @@
+<script>
+  Polymer({
+
+    is: 'dom-tpl0',
+    extends: 'template',
+    _template: null,
+    behaviors: [
+      Polymer.Templatizer
+    ],
+    created: function() {
+      console.log('created 1');
+      console.log(this.content);
+    },
+    attached: function() {
+      console.log('ready 1');
+      console.log(this.content);
+      console.log('ready 2');
+      console.log(this._content);
+      this.templatize(this);
+      var el = this.stamp();
+      console.log(el);
+        
+      var clone = document.importNode(el.root, true);
+      document.body.appendChild(clone);        
+      //document.appendChild(el.root);   
+      this.fire('dom-change');
+
+    }
+  });
+</script>

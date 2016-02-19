@@ -1,0 +1,57 @@
+<script>
+    Polymer({
+
+        is: 'dom-tpl1',
+        _template: null,
+        behaviors: [
+      Polymer.Templatizer
+    ],
+        created: function () {
+            console.log('created 1');
+            console.log(this.content);
+        },
+        attached: function () {
+            console.log('ready 1');
+            console.log(this.content);
+            console.log('ready 2');
+            console.log(this._content);
+            var tpl = document.createElement('template');
+            var html = '<h2>{{fname}}</h2><paper-input value={{fname}}></paper-input>';
+            //var html = '<h2>{{fname}}</h2><h2>{{Lname}}</h2>';
+            tpl.innerHTML = html;
+            console.log('new content of tpl', tpl.content);
+            this.templatize(tpl);
+            var el = this.stamp({
+                'fname': 'asdsa'
+            });
+            console.log('EL', el);
+            var clone = document.importNode(el.root, true);
+            var parentNode = Polymer.dom(this).parentNode;
+            console.log(parentNode);
+            if (parentNode) {
+                var parent = Polymer.dom(parentNode);
+                parent.appendChild(clone);
+            }
+            this.fire('dom-change');
+        },
+        _forwardParentProp: function (prop, value) {
+            console.log('prop ', value);
+            if (this._instance) {
+                this._instance[prop] = value;
+            }
+        },
+        _forwardParentPath: function (path, value) {
+            console.log('path', value);
+            if (this._instance) {
+                this._instance._notifyPath(path, value, true);
+            }
+        },
+        _forwardInstancePath: function (inst, path, value) {
+            console.log('_forwardInstancePath ', path, value);
+        },
+        _forwardInstanceProp: function (inst, prop, value) {
+            console.log('_forwardInstanceProp ', prop, value);
+        }
+
+    });
+</script>

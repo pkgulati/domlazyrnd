@@ -5,8 +5,10 @@
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="import" href="../bower_components/polymer/polymer.html"></script>
-    <link rel="import" href="../bower_components/paper-input/paper-input.html"></script>
+    <link rel="import" href="../bower_components/polymer/polymer.html">
+    </script>
+    <link rel="import" href="../bower_components/paper-input/paper-input.html">
+    </script>
     <style is="custom-style">
     </style>
 </head>
@@ -34,45 +36,60 @@
     </dom-module>
 
     <script>
-        document.querySelector('my-repeater').numbers = [{
-            x: 1,
-            y: 2
-        }, {
-            x: 2,
-            y: 10
-        }];
-
         Polymer({
             is: 'my-repeater',
             properties: {
-                numbers: {
+                number: {
                     type: Object,
-                    value: []
+                    value: {}
                 }
             },
             behaviors: [Polymer.Templatizer],
             ready: function () {
-
+                this.number.x = 23;
                 var templates = Polymer.dom(this.$.template).getDistributedNodes();
 
-                    var template = templates.filter(byClass('x'))[0];
+                var template = templates.filter(byClass('x'))[0];
 
-                    this.templatize(template);
+                this.templatize(template);
 
-                    var itemNode = this.stamp({
-                        i: this.numbers[0]
-                    });
-                    Polymer.dom(this.$.items).appendChild(itemNode.root);
+                var itemNode = this.stamp({
+                    i: this.number
+                });
+                Polymer.dom(this.$.items).appendChild(itemNode.root);
 
-                    template = templates.filter(byClass('y'))[0];
+                template = templates.filter(byClass('y'))[0];
 
-                    this.templatize(template);
+                this.templatize(template);
 
-                    var itemNode = this.stamp({
-                        i: this.numbers[0]
-                    });
-                    Polymer.dom(this.$.items).appendChild(itemNode.root);
+                var itemNode = this.stamp({
+                    i: this.number
+                });
+                Polymer.dom(this.$.items).appendChild(itemNode.root);
+            },
+            _forwardParentProp: function (prop, value) {
+                console.log(prop, value);
+                if (this._instance) {
+                    this._instance[prop] = value;
+                }
+            },
+            _forwardParentPath: function (path, value) {
+                console.log(path, value);
+                if (this._instance) {
+                    this._instance._notifyPath(path, value, true);
+                }
+            },
+            _forwardInstancePath: function (inst, path, value) {
+                console.log('path', inst);
+                console.log(path, value);
+                this.number.x = 256;
+            },
+            _forwardInstanceProp: function (inst, prop, value) {
+                console.log('prop', inst);
+                console.log(prop, value);
             }
+
+
         });
 
         function byClass(className) {
