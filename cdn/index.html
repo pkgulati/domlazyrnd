@@ -1,0 +1,44 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Polymer</title>
+    <link rel="import" href="https://rawgit.com/Download/polymer-cdn/master/lib/polymer/polymer.html">
+    <link rel="import" href="https://rawgit.com/Download/polymer-cdn/master/lib/paper-input/paper-input.html">
+</head>
+
+<body>
+    
+    <my-app></my-app>
+
+    <dom-module id="my-app">
+        <template>
+            <h3>Hello</h3>
+        </template>
+    </dom-module>
+
+    <script>
+        Polymer({
+            is: 'my-app',
+            properties: {
+                fname: {
+                    type: String,
+                    value: "Praveen",
+                    notify: true
+                },
+                flag: {
+                    type: Boolean,
+                    value: false,
+                    notify: true
+                }
+            },
+            attached: function () {
+                var self = this;
+            }
+        });
+    </script>
+</body>
+
+</html>
