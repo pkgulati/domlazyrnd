@@ -1,0 +1,73 @@
+<link rel="import" href="../bower_components/polymer/polymer.html"></script>
+<link rel="import" href="dom-lazy.html"></script>
+<link rel="import" href="dom-tpl0.html"></script>
+<link rel="import" href="dom-tpl1.html"></script>
+<link rel="import" href="dom-if2.html"></script>
+
+<dom-module id="my-debug-app">
+    <template>
+        <h3>asdsad</h3>
+        <button on-click="settrue">Set if=true</button>
+        <button on-click="setfalse">Set if=false</button>
+        <button on-click="doattach">Attach dom-if2</button>
+        <div id="local"></div>
+        <template id="id1" is="dom-if2" restamp 
+            <div>{{lname}}</div>
+            <div>{{lname2}}</div>
+        </template>
+    </template>
+</dom-module>
+
+<script>
+    
+ Polymer({
+        is: 'my-debug-app',
+        properties: {
+          fname : {
+              type : String,
+              value : "Praveen",
+              notify : true
+          },
+          lname : {
+              type : String,
+              value : "Gulati",
+              notify : true
+          },
+          vm: {
+            type: Object,
+            value: {},
+              notify : true
+          },
+          flag : {
+              type : Boolean,
+              value : false,
+              notify : true
+          }
+            
+        },
+        settrue : function() {
+            this.$.id1.if = true;
+        },
+        setfalse : function() {
+            this.$.id1.if = false;
+        },
+        doattach : function() {
+            var t = document.createElement('template', 'dom-if2'),
+            div = document.createElement('div');
+            div.innerHTML = '<h2>hello</h2><span>{{fname}}</span><paper-input value={{fname}}></paper-input>';
+            t.content.appendChild(div);
+            Polymer.dom(this.$.local).appendChild(t);
+            t.setAttribute("if","true");
+        },
+        attached: function() {
+            var self = this;
+            //var el = document.createElement('dom-tpl0');
+            //console.log(el);
+//            setTimeout( function() {
+//            Polymer.dom(self.$.abc).innerHTML = '<span>First Name</span><span>{{fname}}</span>';
+//            console.log('rsr ' , Polymer.dom(self.$.abc).innerHTML);
+//            self.$.abc.lazyrender();
+//            }, 3000);
+        }
+ });
+</script>

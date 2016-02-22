@@ -8,8 +8,6 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="templatizer.html">
-
 <script>
 
   /**
@@ -26,7 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    */
   Polymer({
 
-    is: 'dom-if',
+    is: 'dom-if2',
     extends: 'template',
     _template: null,
 
@@ -105,6 +103,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       //console.log(this._content);
       if (this.if) {
         if (!this.ctor) {
+          console.log(this.content);
+          console.log(this._content);
+          //console.log('don if2 _render', this._content._notes);
+          //this._content._notes = null;    
           this.templatize(this);
         }
         this._ensureInstance();
@@ -127,7 +129,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       if (parentNode) {
         var parent = Polymer.dom(parentNode);
         if (!this._instance) {
-          this._instance = this.stamp();
+          this._instance = this.stamp(parent);
+          console.log(this._instance);
           var root = this._instance.root;
           parent.insertBefore(root, this);
         } else {

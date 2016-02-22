@@ -1,0 +1,19 @@
+<dom-module id="x-attach-dom-bind">
+  <template>
+      <paper-input value={{fname}}></paper-input>
+      <x-content id="local"></x-content>
+ </template>
+  <script>
+    Polymer({
+      is: 'x-attach-dom-bind',
+      attached: function() {
+        var t = document.createElement('template', 'dom-if2'),
+        div = document.createElement('div');
+        div.innerHTML = '<h2>hello</h2><span>{{fname}}</span><paper-input value={{fname}}></paper-input>';
+        t.content.appendChild(div);
+        Polymer.dom(this.$.local).appendChild(t);
+        t.setAttribute("if","true");
+      }
+    });
+  </script>
+</dom-module>

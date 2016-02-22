@@ -5,9 +5,14 @@
 
 <dom-module id="my-app">
     <template>
-        <h3>ddd</h3>
+        <h3>{{fname}}</h3>
         <div id="items"></div>
-        <dom-tpl1 id="abc"></dom-tpl1>
+        <dom-tpl0 id="abc">
+            <div>{{fname}}</div>
+            <div>{{fname}}</div>
+            <paper-input label={{fname}} max={{dsdsd}} value={{fname}}></paper-input>
+        </dom-tpl0>
+<!--        <dom-tpl1></dom-tpl1>-->
     </template>
 </dom-module>
 
