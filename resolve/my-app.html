@@ -3,9 +3,10 @@
 
 <dom-module id="my-app">
     <template id="p3232">
-        <hr>
-        <h2>This is inside app.html</h2>
-        <x-component></x-component>
+<!--        <content id="addOnContent2" href="as" select="[add-on]"></content>-->
+        <img id="addOnContent2" src="../../capture/a.jpg"></img>
+<!--        <content id="addOnContent2" href="[[as]]"></content>-->
+<!--        <x-component href$="[[field1]]"></x-component>-->
     </template>
 
 
@@ -20,6 +21,10 @@
               type : String,
               value : "Praveen",
               notify : true
+          },
+          field1 : {
+              type : String,
+              value : "asdasd.html"
           },
           vm: {
             type: Object,

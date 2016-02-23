@@ -1,0 +1,57 @@
+<link rel="import" href="../bower_components/polymer/polymer.html"></script>
+<link rel="import" href="dom-lazy.html"></script>
+
+<dom-module id="my-app">
+    <template>
+            <h2>asd</h2>
+            <div>
+                <button on-click="doit">Do it</button>
+            </div>
+            <template id="lazy" is="dom-lazy" partial="t1">
+                <h3>asdsad</h3>
+            </template>
+            <template id="t1" preserve-content="true">
+                <span>Hello</span><span>{{fname}}</span>
+            </template>
+    </template>
+</dom-module>
+
+<script>
+    
+ Polymer({
+        is: 'my-app',
+        properties: {
+          fname : {
+              type : String,
+              value : "Praveen",
+              notify : true
+          },
+          field1 : {
+              type : String,
+              value : "asdasd.html"
+          },
+          vm: {
+            type: Object,
+            value: {},
+              notify : true
+          },
+          flag : {
+              type : Boolean,
+              value : false,
+              notify : true
+          }
+        },
+        behaviors: [
+        //  Polymer.Templatizer
+        ],
+        doit : function() {
+            console.log(this.$.t1);
+            this.$.lazy.if = true;
+            //this.templatize(this.$.t1);
+            //var instance = this.stamp();
+            //Polymer.dom(this).appendChild(instance.root);
+            //instance.fname = 'new value';
+            //this.fire('dom-change');
+        }
+ });
+</script>
