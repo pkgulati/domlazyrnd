@@ -7,6 +7,7 @@
     <title>Polymer</title>
     <link rel="import" href="https://rawgit.com/Download/polymer-cdn/master/lib/polymer/polymer.html">
     <link rel="import" href="https://rawgit.com/Download/polymer-cdn/master/lib/paper-input/paper-input.html">
+    
 </head>
 
 <body>
@@ -14,8 +15,12 @@
     <my-app></my-app>
 
     <dom-module id="my-app">
-        <template>
+        <template >
             <h3>Hello</h3>
+            <span>{{fname}}</span>
+            <paper-input label="First Name" value={{fname}}></paper-input>
+            <hr>
+            <x-content id="local"></x-content>
         </template>
     </dom-module>
 
@@ -25,20 +30,21 @@
             properties: {
                 fname: {
                     type: String,
-                    value: "Praveen",
-                    notify: true
-                },
-                flag: {
-                    type: Boolean,
-                    value: false,
                     notify: true
                 }
             },
             attached: function () {
                 var self = this;
+                var t = document.createElement('template', 'dom-if'),
+                div = document.createElement('div');
+                div.innerHTML = '<h3>Dynamic Content</h3><span>{{fname}}</span><paper-input label="First Name 2" value={{fname}}></paper-input>';
+                t.content.appendChild(div);
+                Polymer.dom(this.$.local).appendChild(t);
+                t.setAttribute("if","true");
             }
         });
     </script>
+    
 </body>
 
 </html>
