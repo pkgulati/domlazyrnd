@@ -27,6 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     is: 'dom-lazy',
     extends: 'template',
     _template: null,
+    t1 : null,
 
     /**
      * Fired whenever DOM is added or removed/hidden by this template (by
@@ -108,11 +109,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (!this.ctor) {
           console.log(this.content);
           console.log(this._content);
-          var t1 = document.querySelector('#t1');
-          //console.log('don if2 _render', this._content._notes);
-          console.log('t1 ', t1);
-          //this._content._notes = null;
-          this.templatize(t1);
+          this._template = document.querySelector('#t1');
+          this.templatize(this._template);
         }
         this._ensureInstance();
         this._showHideChildren();
@@ -178,6 +176,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // Called as side-effect of a host property change, responsible for
     // notifying parent.<prop> path change on instance
     _forwardParentProp: function(prop, value) {
+        console.log(prop, value);
       if (this._instance) {
         this._instance[prop] = value;
       }
@@ -187,6 +186,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // Called as side-effect of a host path change, responsible for
     // notifying parent.<path> path change on each row
     _forwardParentPath: function(path, value) {
+        console.log(path, value);
       if (this._instance) {
         this._instance._notifyPath(path, value, true);
       }

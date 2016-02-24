@@ -7,12 +7,18 @@
             <div>
                 <button on-click="doit">Do it</button>
             </div>
+        
             <template id="lazy" is="dom-lazy" partial="t1">
                 <h3>asdsad</h3>
             </template>
+        
             <template id="t1" preserve-content="true">
-                <span>Hello</span><span>{{fname}}</span>
+                <span>First Name : </span>
+                <span>{{fname}}</span>
+                <span>Please enter your name</span>
+                <paper-input label="Lazy input"></paper-input>
             </template>
+        
     </template>
 </dom-module>
 
@@ -41,9 +47,6 @@
               notify : true
           }
         },
-        behaviors: [
-        //  Polymer.Templatizer
-        ],
         doit : function() {
             console.log(this.$.t1);
             this.$.lazy.if = true;

@@ -1,0 +1,35 @@
+<dom-module id="main-element">
+  <template>
+      <h2>ok</h2>
+    <template is="dom-repeat" items="{{myList}}">
+      <!-- this tag does nothing for now -->
+      <dummy-tag foo$="{{item}}"></dummy-tag>
+    </template>
+  </template>
+  <script>
+    Polymer({
+      is: "main-element",
+      upgradeElement: function () {
+        // now that I know my target element is called `foo-bar`
+        Polymer.importHref("foo-bar.html", function () {
+          tplstr = '<foo-bar myData="{{foo}}"></foo-bar>';
+          proto = {
+            is: "dummy-tag",
+            properties: {
+              foo: { type: Object, value: function () { return {}; } }
+            }
+          };
+          var dm = document.createElement("dom-module");
+          dm.id = "dummy-tag";
+          var temp = document.implementation.createHTMLDocument("temp");
+          temp.body.innerHTML = tplstr;
+          var tpl = document.createElement("template");
+          tpl.content.appendChild(temp.body.firstChild);
+          dm.appendChild(tpl);
+          dm.createdCallback();
+          Polymer(proto);
+        });
+      },
+    });
+  </script>
+</dom-module>
